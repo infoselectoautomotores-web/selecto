@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selecto Automotores — Documentación Completa del Sistema</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+  :root {
+    --gold: #c8a03c; --bg: #0a0a0f; --bg2: #111118; --bg3: #1a1a28;
+    --tx: #f0f0f8; --tx2: #8888a8; --tx3: #4a4a6a;
+    --green: #30c880; --red: #e84040; --blue: #4080f0;
+    --brd: rgba(255,255,255,0.08); --brda: rgba(200,160,60,0.3);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tx); line-height: 1.7; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 48px 32px; }
+  /* COVER */
+  .cover { text-align:center; padding: 80px 0 60px; border-bottom: 1px solid var(--brda); margin-bottom: 60px; }
+  .cover-logo { font-family: 'Inter', sans-serif; font-size: 2.8rem; font-weight: 700; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
+  .cover-sub { font-size: 1.1rem; color: var(--tx2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 24px; }
+  .cover-badge { display: inline-flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .badge { padding: 6px 16px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; letter-spacing: 1px; }
+  .badge-gold { background: rgba(200,160,60,0.15); border: 1px solid var(--brda); color: var(--gold); }
+  .badge-green { background: rgba(48,200,128,0.12); border: 1px solid rgba(48,200,128,0.3); color: var(--green); }
+  .badge-blue { background: rgba(64,128,240,0.12); border: 1px solid rgba(64,128,240,0.3); color: var(--blue); }
+  /* TOC */
+  .toc { background: var(--bg2); border: 1px solid var(--brd); border-radius: 12px; padding: 32px; margin-bottom: 48px; }
+  .toc h2 { color: var(--gold); font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+  .toc ul { list-style: none; }
+  .toc li { padding: 5px 0; border-bottom: 1px solid var(--brd); }
+  .toc li:last-child { border: none; }
+  .toc a { color: var(--tx2); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+  .toc a:hover { color: var(--gold); }
+  .toc .toc-num { color: var(--tx3); font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; margin-right: 12px; }
+  /* CONTENT */
+  h1 { font-size: 2rem; font-weight: 700; color: var(--tx); margin: 48px 0 16px; padding-top: 48px; border-top: 2px solid var(--brda); }
+  h1:first-of-type { border-top: none; padding-top: 0; }
+  h2 { font-size: 1.4rem; font-weight: 600; color: var(--gold); margin: 36px 0 12px; }
+  h3 { font-size: 1.1rem; font-weight: 600; color: var(--tx); margin: 24px 0 8px; border-left: 3px solid var(--gold); padding-left: 12px; }
+  h4 { font-size: 0.95rem; font-weight: 600; color: var(--tx2); margin: 16px 0 6px; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; }
+  p { margin-bottom: 14px; color: var(--tx2); font-size: 0.93rem; }
+  strong { color: var(--tx); font-weight: 600; }
+  em { color: var(--gold); font-style: normal; font-weight: 500; }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  ul, ol { padding-left: 24px; margin-bottom: 14px; }
+  li { color: var(--tx2); font-size: 0.93rem; margin-bottom: 6px; }
+  li strong { color: var(--tx); }
+  /* CODE */
+  pre { background: var(--bg2); border: 1px solid var(--brd); border-radius: 8px; padding: 20px; margin: 16px 0; overflow-x: auto; }
+  code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: var(--green); }
+  pre code { color: var(--tx2); }
+  pre code .comment { color: var(--tx3); }
+  :not(pre) > code { background: rgba(255,255,255,0.06); border: 1px solid var(--brd); border-radius: 4px; padding: 2px 6px; color: var(--gold); font-size: 0.82rem; }
+  /* TABLES */
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.85rem; }
+  th { background: rgba(200,160,60,0.1); border: 1px solid var(--brda); padding: 10px 14px; text-align: left; font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); }
+  td { border: 1px solid var(--brd); padding: 10px 14px; color: var(--tx2); }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  /* CALLOUTS */
+  .callout { border-radius: 8px; padding: 16px 20px; margin: 16px 0; border-left: 3px solid; }
+  .callout-warn { background: rgba(200,160,60,0.08); border-color: var(--gold); }
+  .callout-critical { background: rgba(232,64,64,0.08); border-color: var(--red); }
+  .callout-info { background: rgba(64,128,240,0.08); border-color: var(--blue); }
+  .callout-ok { background: rgba(48,200,128,0.08); border-color: var(--green); }
+  .callout p { margin: 0; font-size: 0.88rem; }
+  /* SECTION DIVIDERS */
+  hr { border: none; border-top: 1px solid var(--brd); margin: 40px 0; }
+  .part-header { background: linear-gradient(135deg, rgba(200,160,60,0.12), rgba(200,160,60,0.04)); border: 1px solid var(--brda); border-radius: 12px; padding: 28px 32px; margin: 48px 0 32px; }
+  .part-number { font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--tx3); margin-bottom: 8px; }
+  .part-title { font-size: 1.6rem; font-weight: 700; color: var(--gold); }
+  .part-desc { color: var(--tx2); font-size: 0.9rem; margin-top: 8px; }
+  /* FOOTER */
+  .footer { border-top: 1px solid var(--brd); padding: 32px 0; margin-top: 60px; text-align: center; color: var(--tx3); font-size: 0.8rem; }
+  @media print { body { background: #fff; color: #111; } pre { background: #f5f5f5; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="cover">
+  <div class="cover-logo">⬛ Selecto Automotores</div>
+  <div class="cover-sub">Documentación Completa del Sistema</div>
+  <div class="cover-badge">
+    <span class="badge badge-gold">v2026.06 — Final</span>
+    <span class="badge badge-green">Single HTML File</span>
+    <span class="badge badge-blue">144 funciones · 9 módulos admin · 6 módulos MKT</span>
+  </div>
+</div>
+
+<div class="toc">
+  <h2>Índice de Contenidos</h2>
+  <ul>
+    <li><span class="toc-num">01</span><a href="#parte1">Prompt Maestro Definitivo</a></li>
+    <li><span class="toc-num">02</span><a href="#arquitectura">Arquitectura y Stack Tecnológico</a></li>
+    <li><span class="toc-num">03</span><a href="#identidad">Identidad Visual y Diseño</a></li>
+    <li><span class="toc-num">04</span><a href="#autenticacion">Sistema de Autenticación y Roles</a></li>
+    <li><span class="toc-num">05</span><a href="#publico">Módulo: Sitio Público</a></li>
+    <li><span class="toc-num">06</span><a href="#dashboard">Módulo: Dashboard Administrador</a></li>
+    <li><span class="toc-num">07</span><a href="#vehiculos">Módulo: Vehículos</a></li>
+    <li><span class="toc-num">08</span><a href="#compras">Módulo: Compras y Socios</a></li>
+    <li><span class="toc-num">09</span><a href="#gastos">Módulo: Gastos</a></li>
+    <li><span class="toc-num">10</span><a href="#ventas">Módulo: Ventas y Permutas</a></li>
+    <li><span class="toc-num">11</span><a href="#ganancias">Módulo: Ganancias y ROI</a></li>
+    <li><span class="toc-num">12</span><a href="#redes">Módulo: Redes Sociales</a></li>
+    <li><span class="toc-num">13</span><a href="#historial">Módulo: Historial de Cambios</a></li>
+    <li><span class="toc-num">14</span><a href="#backups">Módulo: Backups y Guardado Automático</a></li>
+    <li><span class="toc-num">15</span><a href="#dolar">Módulo: Cotización del Dólar</a></li>
+    <li><span class="toc-num">16</span><a href="#marketing">Panel Marketing — Todos los Módulos</a></li>
+    <li><span class="toc-num">17</span><a href="#datos">Estructura Completa de Datos</a></li>
+    <li><span class="toc-num">18</span><a href="#formulas">Fórmulas Financieras Definitivas</a></li>
+    <li><span class="toc-num">19</span><a href="#tecnico">Documentación Técnica para Desarrolladores</a></li>
+    <li><span class="toc-num">20</span><a href="#localStorage">LocalStorage — Mapa Completo</a></li>
+  </ul>
+</div>
+
+
+<div class="part-header" id="parte1">
+  <div class="part-number">Parte 01</div>
+  <div class="part-title">Prompt Maestro Definitivo</div>
+  <div class="part-desc">Instrucción completa para recrear Selecto Automotores desde cero en cualquier modelo de IA</div>
+</div>
+
+<div class="callout callout-critical">
+  <p><strong>⚠ INSTRUCCIÓN CRÍTICA PARA EL MODELO:</strong> Este sistema debe implementarse como un ÚNICO archivo HTML autocontenido con CSS, JavaScript y assets embebidos. Sin frameworks externos. Sin servidor. Sin npm. Solo HTML + CSS + JS vanilla + Chart.js 4.4.0 desde CDN.</p>
+</div>
+
+<h2 id="arquitectura">Arquitectura y Stack</h2>
+<table>
+  <tr><th>Componente</th><th>Tecnología</th><th>Detalles</th></tr>
+  <tr><td>Contenedor</td><td>HTML5 único</td><td>Un solo archivo .html, todo embebido</td></tr>
+  <tr><td>Estilos</td><td>CSS3 vanilla</td><td>Variables CSS, Flexbox, Grid, Animaciones</td></tr>
+  <tr><td>Lógica</td><td>JavaScript ES2022</td><td>'use strict', async/await, optional chaining</td></tr>
+  <tr><td>Gráficos</td><td>Chart.js 4.4.0</td><td>CDN: cdnjs.cloudflare.com</td></tr>
+  <tr><td>Tipografías</td><td>Google Fonts</td><td>Rajdhani (títulos) + Exo 2 (cuerpo)</td></tr>
+  <tr><td>Almacenamiento</td><td>localStorage</td><td>Prefijo sa_, ~5MB disponibles</td></tr>
+  <tr><td>API Dólar</td><td>dolarapi.com</td><td>CORS-friendly, sin autenticación</td></tr>
+</table>
+
+<h2 id="identidad">Identidad Visual</h2>
+<pre><code>/* PALETA DE COLORES */
+--bg:    #0a0a0f    /* Fondo principal — negro azulado profundo */
+--bg2:   #111118    /* Fondo de cards */
+--bg3:   rgba(255,255,255,0.04)  /* Glassmorphism */
+--gold:  #c8a03c    /* Dorado Selecto — color primario de marca */
+--gold3: #a07828    /* Dorado oscuro */
+--tx:    #f0f0f8    /* Texto principal */
+--tx2:   #8888a8    /* Texto secundario */
+--tx3:   #4a4a6a    /* Texto muted */
+--green: #30c880    /* Éxito / Disponible */
+--red:   #e84040    /* Error / Reparación */
+--blue:  #4080f0    /* Info */
+--brda:  rgba(200,160,60,0.4)  /* Borde dorado */
+--sw:    240px      /* Ancho sidebar */
+--r:     12px       /* Border radius */</code></pre>
+
+<h3>Fuentes</h3>
+<ul>
+  <li><strong>Rajdhani</strong> (pesos 300/400/500/600/700) — Títulos de secciones, números financieros, badges, labels en mayúsculas</li>
+  <li><strong>Exo 2</strong> (100-900) — Cuerpo de texto, formularios, botones</li>
+</ul>
+
+<h3>Efectos visuales</h3>
+<ul>
+  <li>Glassmorphism: <code>backdrop-filter: blur(16px)</code> en navbar y modales</li>
+  <li>Hover de tarjetas: <code>transform: translateY(-8px)</code> + sombra dorada</li>
+  <li>Zoom de imágenes: <code>transform: scale(1.08)</code> en hover de tarjetas</li>
+  <li>Animaciones de entrada: <code>cubic-bezier(0.16, 1, 0.3, 1)</code> (spring)</li>
+  <li>Transiciones estándar: <code>0.3s ease</code></li>
+  <li>Logo hero: <code>animation: heroReveal 1.4s cubic-bezier(.16,1,.3,1) 0.3s forwards</code></li>
+  <li>Logo fade en scroll: <code>opacity = max(0, 1 - scrollY/300)</code></li>
+</ul>
+
+<h2 id="autenticacion">Sistema de Autenticación y Roles</h2>
+
+<div class="callout callout-warn">
+  <p><strong>REGLA CRÍTICA:</strong> <code>saveAll</code> es una <code>const</code> arrow function. NUNCA redeclararla con <code>function saveAll(){}</code> en strict mode — causaría SyntaxError fatal que rompe todo el script.</p>
+</div>
+
+<h3>Credenciales por defecto</h3>
+<table>
+  <tr><th>Rol</th><th>Usuario</th><th>Contraseña</th><th>Acceso</th></tr>
+  <tr><td>Administrador</td><td>ADMIN</td><td>tobiasm</td><td>Panel admin completo</td></tr>
+  <tr><td>Marketing</td><td>MARKETING</td><td>market</td><td>Panel marketing (sin datos financieros)</td></tr>
+</table>
+
+<h3>Flujo de autenticación</h3>
+<pre><code>doLogin()  ← función en módulo Marketing (última definición gana)
+  │
+  ├── initUsers()  ← crea usuarios por defecto si MKT_USERS está vacío
+  ├── Busca en MKT_USERS donde user.toUpperCase() === input y pass === input
+  │                                              y estado === 'activo'
+  ├── Si rol === 'marketing' → openMktPanel()
+  └── Si rol === 'admin'     → showSec('dashboard')
+
+localStorage.sa_session = JSON.stringify(foundUser)  ← solo marketing</code></pre>
+
+<h2 id="publico">Módulo: Sitio Público</h2>
+<h3>Reglas de visibilidad del catálogo</h3>
+<table>
+  <tr><th>Estado</th><th>Visible en público</th><th>Badge</th></tr>
+  <tr><td>Disponible</td><td>✅ SÍ</td><td>Verde</td></tr>
+  <tr><td>Señado</td><td>✅ SÍ</td><td>Dorado</td></tr>
+  <tr><td>Reparación</td><td>❌ NO</td><td>—</td></tr>
+  <tr><td>Vendido</td><td>❌ NO</td><td>—</td></tr>
+</table>
+
+<h3>Campos visibles vs ocultos al cliente</h3>
+<table>
+  <tr><th>Campo</th><th>Público</th><th>Admin</th></tr>
+  <tr><td>Marca, Modelo, Año</td><td>✅</td><td>✅</td></tr>
+  <tr><td>Kilómetros, Color, Patente</td><td>✅</td><td>✅</td></tr>
+  <tr><td>Valor Venta, Entrega Mínima</td><td>✅</td><td>✅</td></tr>
+  <tr><td>Fotos, Descripción</td><td>✅</td><td>✅</td></tr>
+  <tr><td>N° Motor, N° Chasis</td><td>❌</td><td>✅</td></tr>
+  <tr><td>Distribución, Service</td><td>❌</td><td>✅</td></tr>
+  <tr><td>Valor Compra, Socios, Gastos</td><td>❌</td><td>✅</td></tr>
+</table>
+
+<h3>Contacto embebido</h3>
+<ul>
+  <li><strong>WhatsApp:</strong> https://wa.me/542994599053</li>
+  <li><strong>Instagram:</strong> https://www.instagram.com/selectoautos</li>
+  <li><strong>Google Maps:</strong> Julio A. Roca 2026 y Gobernador Alfredo Asmar, Neuquén Capital</li>
+  <li>El iframe del mapa usa <code>filter: invert(0.9) hue-rotate(180deg)</code> para modo oscuro</li>
+</ul>
+
+<h2 id="dashboard">Módulo: Dashboard Administrador</h2>
+<h3>Orden de elementos (de arriba a abajo)</h3>
+<ol>
+  <li>Encabezado con título + widget de fecha/hora en tiempo real (reloj cada 1s)</li>
+  <li>Selector de período (mes + año) con botón "Ver histórico completo"</li>
+  <li><strong>Tarjeta de Cotización del Dólar</strong> (oculta hasta que carga)</li>
+  <li>Grid de KPIs (tarjetas .dc)</li>
+  <li>Dos gráficos Chart.js: doughnut estados + bar financiero</li>
+  <li>Alertas del sistema</li>
+</ol>
+
+<h3>KPIs del dashboard</h3>
+<table>
+  <tr><th>Métrica</th><th>Fórmula</th><th>Filtro período</th></tr>
+  <tr><td>Capital Invertido</td><td>Σ valorCompra (activos)</td><td>No (global)</td></tr>
+  <tr><td>Capital Próximo</td><td>Σ valorVenta (activos)</td><td>No (global)</td></tr>
+  <tr><td>Ganancia del Período</td><td>Σ ganancias (vendidos en período)</td><td>Sí</td></tr>
+  <tr><td>Ventas del Período</td><td>Count (vendidos en período)</td><td>Sí</td></tr>
+  <tr><td>ROI Promedio</td><td>Σ(gan/costo)/n × 100</td><td>Sí</td></tr>
+  <tr><td>Disponibles / Señados / Reparación / Vendidos</td><td>Count por estado</td><td>No (global)</td></tr>
+  <tr><td>Tiempo Prom. en Stock</td><td>Σdías/n (vendidos)</td><td>No (global)</td></tr>
+  <tr><td>Menor / Mayor tiempo en stock</td><td>min/max días (vendidos)</td><td>No (global)</td></tr>
+</table>
+
+<h2 id="vehiculos">Módulo: Vehículos — Estructura de Datos</h2>
+<pre><code>// Objeto vehículo — almacenado en V[] → sa_veh
+{
+  id:           1,                    // Auto-incremental, empieza en 1
+  fechaIngreso: "2026-05-01",         // Fecha ISO
+  estado:       "Disponible",         // Disponible|Señado|Reparación|Vendido
+  marca:        "Toyota",
+  modelo:       "Corolla",
+  anio:         "2022",
+  km:           "50000",
+  patente:      "AB123CD",
+  color:        "Blanco",
+  valorVenta:   15000000,             // Number
+  motor:        "MOTOR123",           // INTERNO - no mostrar al cliente
+  chasis:       "CHASIS456",          // INTERNO
+  distribucion: "Sí",                 // INTERNO: Sí|No
+  service:      "No",                 // INTERNO: Sí|No
+  detalles:     "Observaciones...",
+  fbText:       "VENDO · FINANCIO..." // Generado en Redes Sociales
+  images: [                           // Array de fotos en base64
+    { data: "data:image/jpeg;base64,...", name: "foto1.jpg" }
+  ],
+  coverIdx:     0                     // Índice de la imagen de portada
+}</code></pre>
+
+<h2 id="compras">Módulo: Compras — Estructura de Datos</h2>
+<pre><code>// Objeto compra — almacenado en P{} → sa_pur, clave = id de vehículo
+P[1] = {
+  fecha:  "2026-05-01",
+  valor:  10000000,    // Valor real de compra
+  info:   9500000,     // Valor de mercado para calcular entrega mínima
+  socios: [
+    { nombre: "Socio A", capital: 4000000 },
+    { nombre: "Socio B", capital: 6000000 },
+    { nombre: "",        capital: 0 }
+  ]
+}
+
+// Entrega mínima (para clientes):
+// getEntrega(v) = v.valorVenta - P[v.id].info * 0.6</code></pre>
+
+<h2 id="gastos">Módulo: Gastos — Estructura de Datos</h2>
+<pre><code>// Array de gastos — almacenado en E{} → sa_exp, clave = id de vehículo
+E[1] = [
+  {
+    fecha:    "2026-05-10",
+    concepto: "Pintura completa",
+    monto:    500000,
+    pagador:  "Agencia",    // Agencia|Socio 1|Socio 2|Socio 3
+    obs:      "Notas"
+  }
+]
+
+// Costo Total = P[id].valor + Σ E[id][i].monto</code></pre>
+
+<h2 id="ventas">Módulo: Ventas — Estructura de Datos</h2>
+<pre><code>// Objeto venta — almacenado en S{} → sa_sal, clave = id de vehículo
+S[1] = {
+  valor:       15000000,    // Valor real de venta
+  fecha:       "2026-05-31",
+  comision:    450000,      // En pesos
+  comisionPct: 3,           // Porcentaje (alternativa, calcula pesos automáticamente)
+  permuta:     "Sí",        // Sí|No
+  permValor:   2000000,     // Valor del vehículo recibido en permuta
+  permId:      "5",         // ID en sistema (si existe)
+  permMarca:   "Ford",
+  permModelo:  "Focus",
+  permAnio:    "2018",
+  permKm:      "80000",
+  formaCobro:  "Mixto",     // Efectivo|Transferencia|Financiado|Mixto
+  entregaInit: 5000000,     // Si financiado/mixto
+  cuotas:      "24",        // Si financiado/mixto
+  obs:         "Observaciones"
+}
+
+// Dinero a Liquidar = valor - permValor  (solo informativo)
+// NO afecta ganancia ni ROI</code></pre>
+
+<h2 id="ganancias">Módulo: Ganancias — Fórmulas Definitivas</h2>
+
+<div class="callout callout-critical">
+  <p><strong>🚨 CRÍTICO — NO MODIFICAR JAMÁS:</strong> La permuta es una forma de cobro. NO suma ni resta de la ganancia.</p>
+</div>
+
+<pre><code>// FÓRMULAS DEFINITIVAS E INAMOVIBLES
+
+CostoTotal    = Valor_Compra + Σ_Gastos
+Ganancia      = Valor_Venta - CostoTotal - Comisión
+ROI           = (Ganancia / CostoTotal) × 100
+DineroLiquidar = Valor_Venta - Valor_Permuta   ← SOLO informativo
+
+// Ejemplo de validación:
+// Compra: $8.000.000 | Gastos: $500.000 | Venta: $10.000.000
+// Permuta: $2.000.000 | Comisión: $0
+//
+// CostoTotal    = 8.000.000 + 500.000    = $8.500.000
+// Ganancia      = 10.000.000 - 8.500.000 = $1.500.000 ✅
+// ROI           = 1.500.000 / 8.500.000  = 17.65% ✅
+// DineroLiquidar = 10.000.000 - 2.000.000 = $8.000.000 (informativo)</code></pre>
+
+<h3>Distribución por socios</h3>
+<pre><code>pct_socio  = capital_socio / CostoTotal
+gan_socio  = Ganancia × pct_socio
+gastos_soc = Σ gastos donde pagador = nombre_socio
+total_cobrar = capital_socio + gastos_soc + gan_socio</code></pre>
+
+<h2 id="redes">Módulo: Redes Sociales</h2>
+<h3>Template Facebook Marketplace</h3>
+<pre><code>VENDO · FINANCIO · PERMUTO
+
+🚗 [MARCA MODELO]
+🗓️ Modelo [AÑO]
+🧭 [KM] km
+📄 Lista para transferir
+⚡ Entrega inmediata
+
+💰 Entrega mínima: $[ENTREGA]
+
+Financiá el saldo solo con tu DNI
+
+🔁 Tomamos tu usado al mejor precio
+
+📆 Planes disponibles:
+🔹 De 12 a 48 cuotas fijas
+
+📲 Consultas por WhatsApp:
+
+📞 2️⃣9️⃣9️⃣ 4️⃣5️⃣9️⃣ 9️⃣0️⃣5️⃣3️⃣
+
+📍 Julio Argentino Roca 2026 y Gobernador Alfredo Asmar – Neuquén Capital</code></pre>
+
+<p>El texto generado se guarda en <code>veh.fbText</code> y se usa como descripción pública en el sitio y en el modal de detalle.</p>
+
+<h2 id="historial">Módulo: Historial de Cambios</h2>
+<pre><code>// Estructura de cada registro — almacenado en H[] → sa_hist
+{
+  ts:     "31/05/2026 08:35:00",
+  action: "editó vehículo",
+  veh:    "Toyota Corolla #1",
+  detail: "Estado:Vendido | Precio:$15.000.000",
+  user:   "ADMIN"
+}
+
+// Límite: 500 registros (H.slice(0, 500))
+// addHist(action, vehObj, detailStr) → H.unshift({...}) → saveAll()</code></pre>
+
+<h3>Acciones registradas automáticamente</h3>
+<table>
+  <tr><th>Acción</th><th>Disparador</th></tr>
+  <tr><td>creó / editó / eliminó vehículo</td><td>saveVeh, deleteV</td></tr>
+  <tr><td>cambió estado / precio</td><td>saveVeh (si difiere de versión anterior)</td></tr>
+  <tr><td>registró compra / gasto / venta</td><td>saveCompra, addGasto, saveVenta</td></tr>
+  <tr><td>eliminó gasto</td><td>removeGasto</td></tr>
+  <tr><td>exportó / importó / restauró backup</td><td>exportJSON, loadJSON, restoreBackup</td></tr>
+  <tr><td>inició / cerró sesión</td><td>doLogin, logout</td></tr>
+  <tr><td>creó vehículo por permuta</td><td>createPermVeh</td></tr>
+</table>
+
+<h2 id="backups">Módulo: Backups y Guardado Automático</h2>
+<h3>Arquitectura del autosave</h3>
+<pre><code>// saveAll es una const — NO se puede redeclarar
+const saveAll = () => {
+  dbS('veh', V);  dbSO('pur', P);  dbSO('exp', E);
+  dbSO('sal', S); dbS('hist', H);
+  localStorage.setItem('sa_nid', nid);
+  if (typeof onAfterSave === 'function') onAfterSave();  // Hook!
+};
+
+// onAfterSave: módulo Autosave — debounce 600ms
+function onAfterSave() {
+  _isDirty = true;
+  showSavingIndicator();          // "Guardando..." (dorado parpadeante)
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(() => {
+    _lastSavedAt = new Date();
+    _isDirty = false;
+    showSavedIndicator();          // "🟢 Datos guardados" con hora
+    checkAutoBackup();             // Si >24h sin backup → createBackupNow(true)
+  }, 600);
+}</code></pre>
+
+<h3>Estructura de backups en localStorage</h3>
+<pre><code>// Lista de metadatos: sa_backups
+[
+  { id: "bk_1717200000000", label: "2026-05-31 10:30", size: 45000, ts: 1717200000000 },
+  ...
+]
+
+// Datos de cada backup: sa_bk_{id}
+{
+  vehicles, purchases, expenses, sales, history, nextId,
+  mktEvents, mktKanban, mktMedia: [], mktTasks, mktUsers,
+  createdAt: "2026-05-31T10:30:00.000Z"
+}
+
+// Límite: MAX_BACKUPS = 30
+// Auto-backup cada AUTOBK_INTERVAL = 24 * 60 * 60 * 1000 ms</code></pre>
+
+<h2 id="dolar">Módulo: Cotización del Dólar</h2>
+<h3>APIs utilizadas</h3>
+<table>
+  <tr><th>Tipo</th><th>URL</th><th>Respuesta</th></tr>
+  <tr><td>Blue</td><td>https://dolarapi.com/v1/dolares/blue</td><td>{compra, venta, ...}</td></tr>
+  <tr><td>Oficial</td><td>https://dolarapi.com/v1/dolares/oficial</td><td>{compra, venta, ...}</td></tr>
+</table>
+
+<pre><code>// Variables globales (disponibles en todo el sistema)
+let dolarBlueCompra    = 0;
+let dolarBlueVenta     = 0;
+let dolarOficialCompra = 0;
+let dolarOficialVenta  = 0;
+
+// Flujo de inicialización
+startDolarAutoRefresh()
+  ├── loadDolarCache()       → muestra datos guardados inmediatamente
+  ├── fetchDolar()           → fetch paralelo blue + oficial
+  │     ├── Promise.all([blue, oficial])
+  │     ├── Si OK → actualiza globals + saveDolarCache() + renderDolarCard(false)
+  │     └── Si falla → renderDolarCard(true) con "⚠ Usando última cotización"
+  └── setInterval(fetchDolar, 300000)  // 5 minutos
+
+// Cache: sa_dolar_cache = { blueCompra, blueVenta, oficialCompra, oficialVenta, ts }</code></pre>
+
+<h3>Indicadores de tendencia</h3>
+<pre><code>function trend(curr, prev) {
+  if (!prev || prev === 0) return { icon: '',   color: 'var(--tx3)' };
+  if (curr > prev)         return { icon: ' ▲', color: 'var(--green)' };
+  if (curr < prev)         return { icon: ' ▼', color: 'var(--red)' };
+  return                          { icon: ' —', color: 'var(--tx3)' };
+}</code></pre>
+
+<h2 id="marketing">Panel Marketing</h2>
+
+<div class="callout callout-info">
+  <p><strong>Acceso:</strong> MARKETING / market → <code>openMktPanel()</code> → oculta publicSite y adminPanel, muestra mktPanel</p>
+</div>
+
+<h3>Estructura de eventos del calendario</h3>
+<pre><code>MKT_EVENTS[] → sa_mkt_events
+{
+  id:        "ev_1717200000000",
+  fecha:     "2026-06-15",
+  plat:      "Instagram",          // Instagram|Facebook|WhatsApp|YouTube|TikTok|Otro
+  tipo:      "Reel",               // Foto|Video|Reel|Historia|Carrusel|Story|Post
+  estado:    "Pendiente",          // Pendiente|En Diseño|Programado|Publicado
+  desc:      "Descripción...",
+  veh:       "3",                  // ID de vehículo relacionado
+  obs:       "Notas",
+  creadoPor: "Marketing"
+}</code></pre>
+
+<h3>Estructura de tarjetas Kanban</h3>
+<pre><code>MKT_KANBAN → sa_mkt_kanban
+{
+  ideas:      [ {id, title, plat, desc, veh, resp, due}, ... ],
+  diseño:     [ ... ],
+  revision:   [ ... ],
+  aprobado:   [ ... ],
+  programado: [ ... ],
+  publicado:  [ ... ]
+}
+// Drag & drop: kdragStart → kdrop → mover entre columnas → saveMkt()</code></pre>
+
+<h3>Estructura de archivos multimedia</h3>
+<pre><code>MKT_MEDIA[] → sa_mkt_media
+{
+  id:        "med_1717200000000",
+  name:      "foto_toyota.jpg",
+  tipo:      "imagen",             // imagen|video|pdf|diseño
+  veh:       "1",
+  tags:      "toyota, disponible",
+  data:      "data:image/jpeg;base64,...",  // base64
+  fecha:     "2026-05-31",
+  cargadoPor: "Marketing"
+}</code></pre>
+
+<h3>Estructura de tareas</h3>
+<pre><code>MKT_TASKS[] → sa_mkt_tasks
+{
+  id:        "task_1717200000000",
+  title:     "Preparar fotos del Toyota",
+  desc:      "Descripción",
+  prio:      "Alta",               // Alta|Media|Baja
+  status:    "Pendiente",          // Pendiente|En proceso|Finalizada
+  due:       "2026-06-30",
+  resp:      "Responsable",
+  creadoPor: "Marketing"
+}</code></pre>
+
+<h3>Estructura de usuarios</h3>
+<pre><code>MKT_USERS[] → sa_mkt_users
+{
+  id:       1,
+  nombre:   "Administrador",
+  apellido: "",
+  user:     "ADMIN",               // Siempre en mayúsculas
+  pass:     "tobiasm",
+  rol:      "admin",               // admin|marketing
+  estado:   "activo"               // activo|inactivo
+}
+// Usuarios 1 y 2 son inmutables (no se pueden eliminar)</code></pre>
+
+<h2 id="datos">Mapa Completo de localStorage</h2>
+<table>
+  <tr><th>Key</th><th>Tipo</th><th>Contenido</th><th>Escritura</th></tr>
+  <tr><td>sa_veh</td><td>Array JSON</td><td>Todos los vehículos</td><td>saveAll()</td></tr>
+  <tr><td>sa_pur</td><td>Objeto JSON</td><td>Compras por ID vehículo</td><td>saveAll()</td></tr>
+  <tr><td>sa_exp</td><td>Objeto JSON</td><td>Gastos por ID vehículo</td><td>saveAll()</td></tr>
+  <tr><td>sa_sal</td><td>Objeto JSON</td><td>Ventas por ID vehículo</td><td>saveAll()</td></tr>
+  <tr><td>sa_hist</td><td>Array JSON</td><td>Historial de auditoría</td><td>saveAll()</td></tr>
+  <tr><td>sa_nid</td><td>String</td><td>Próximo ID de vehículo</td><td>saveAll()</td></tr>
+  <tr><td>sa_mkt_events</td><td>Array JSON</td><td>Eventos del calendario</td><td>saveMkt()</td></tr>
+  <tr><td>sa_mkt_kanban</td><td>Objeto JSON</td><td>Columnas y tarjetas</td><td>saveMkt()</td></tr>
+  <tr><td>sa_mkt_media</td><td>Array JSON</td><td>Archivos multimedia</td><td>saveMkt()</td></tr>
+  <tr><td>sa_mkt_tasks</td><td>Array JSON</td><td>Tareas</td><td>saveMkt()</td></tr>
+  <tr><td>sa_mkt_users</td><td>Array JSON</td><td>Usuarios del sistema</td><td>saveMkt()</td></tr>
+  <tr><td>sa_session</td><td>Objeto JSON</td><td>Sesión activa (Marketing)</td><td>doLogin()</td></tr>
+  <tr><td>sa_backups</td><td>Array JSON</td><td>Metadatos de backups</td><td>saveBackupList()</td></tr>
+  <tr><td>sa_bk_{id}</td><td>String JSON</td><td>Datos de cada backup</td><td>createBackupNow()</td></tr>
+  <tr><td>sa_dolar_cache</td><td>Objeto JSON</td><td>Última cotización</td><td>saveDolarCache()</td></tr>
+</table>
+
+<h2 id="tecnico">Documentación Técnica — Orden de Módulos en el Script</h2>
+
+<div class="callout callout-warn">
+  <p><strong>El orden de los módulos importa.</strong> Las <code>function declarations</code> se cargan en orden de fuente. Las últimas definiciones de <code>doLogin</code>, <code>logout</code>, <code>exportJSON</code> y <code>loadJSON</code> son las que prevalecen (módulos Marketing y Autosave).</p>
+</div>
+
+<pre><code>&lt;script&gt;
+'use strict';
+// ══════════════════════════════════════════════
+// MÓDULO 1: PRINCIPAL (~50KB)
+// ══════════════════════════════════════════════
+const LOGO_SRC = 'data:image/png;base64,...';  // ← logo en base64
+
+// DB Helpers
+const dbG  = k => JSON.parse(localStorage.getItem('sa_' + k)) || []
+const dbGO = k => JSON.parse(localStorage.getItem('sa_' + k)) || {}
+const dbS  = (k, v) => localStorage.setItem('sa_' + k, JSON.stringify(v))
+const dbSO = (k, v) => localStorage.setItem('sa_' + k, JSON.stringify(v))
+
+// Estado global
+let V   = dbG('veh')   // Vehículos
+let P   = dbGO('pur')  // Compras
+let E   = dbGO('exp')  // Gastos
+let S   = dbGO('sal')  // Ventas
+let H   = dbG('hist')  // Historial
+let nid = parseInt(localStorage.getItem('sa_nid') || '1')
+
+// saveAll — CONST, NO redeclarar
+const saveAll = () => {
+  dbS('veh',V); dbSO('pur',P); dbSO('exp',E);
+  dbSO('sal',S); dbS('hist',H);
+  localStorage.setItem('sa_nid', nid);
+  if(typeof onAfterSave==='function') onAfterSave(); // Hook autosave
+};
+
+// [... todas las funciones del módulo principal ...]
+
+// ══════════════════════════════════════════════
+// MÓDULO 2: MARKETING (~35KB)
+// ══════════════════════════════════════════════
+let MKT_EVENTS  = dbG('mkt_events')
+let MKT_KANBAN  = dbGO('mkt_kanban')
+let MKT_MEDIA   = dbG('mkt_media')
+let MKT_TASKS   = dbG('mkt_tasks')
+let MKT_USERS   = dbG('mkt_users')
+let MKT_SESSION = null
+
+const saveMkt = () => { /* ... */ };
+
+function doLogin() { /* OVERRIDE — multi-rol */ }
+function logout()  { /* OVERRIDE — limpia MKT_SESSION */ }
+
+// ══════════════════════════════════════════════
+// MÓDULO 3: AUTOSAVE (~14KB)
+// ══════════════════════════════════════════════
+let _lastSavedAt = null, _saveTimer = null, _isDirty = false;
+const BACKUP_KEY         = 'sa_backups';
+const BACKUP_DATA_PREFIX = 'sa_bk_';
+const MAX_BACKUPS        = 30;
+const AUTOBK_INTERVAL   = 24 * 60 * 60 * 1000;
+
+function onAfterSave() { /* debounce 600ms → showSavedIndicator */ }
+function exportJSON()  { /* OVERRIDE — crea backup previo */ }
+function loadJSON(e)   { /* OVERRIDE — usa applyBackupData */ }
+
+// ══════════════════════════════════════════════
+// MÓDULO 4: DÓLAR (~9KB)
+// ══════════════════════════════════════════════
+let dolarBlueCompra = 0, dolarBlueVenta = 0;
+let dolarOficialCompra = 0, dolarOficialVenta = 0;
+const DOLAR_INTERVAL  = 5 * 60 * 1000;
+const DOLAR_CACHE_KEY = 'sa_dolar_cache';
+
+async function fetchDolar() { /* Promise.all([blue, oficial]) */ }
+function startDolarAutoRefresh() { /* loadCache + fetch + setInterval */ }
+
+&lt;/script&gt;</code></pre>
+
+<h3>DOMContentLoaded — Secuencia de inicialización</h3>
+<pre><code>document.addEventListener('DOMContentLoaded', () => {
+  // 1. Logo en todos los elementos
+  document.querySelectorAll(
+    '#heroLogo, #navLogo, #sbLogo, #loginLogo, #mktLogo'
+  ).forEach(i => i.src = LOGO_SRC);
+
+  // 2. Selector de período en dashboard
+  initPeriodSel();
+
+  // 3. Renderiza sitio público
+  initApp();  // → renderPublic()
+
+  // 4. Reloj del panel admin
+  startClock();  // → setInterval 1s
+
+  // 5. Usuarios por defecto si no existen
+  if(typeof initUsers === 'function') initUsers();
+
+  // 6. Botón gestión de usuarios en backup section
+  if(typeof addAdminUsersBtn === 'function') addAdminUsersBtn();
+
+  // 7. Enter en campo contraseña
+  document.getElementById('loginPass').addEventListener(
+    'keydown', e => { if(e.key === 'Enter') doLogin(); }
+  );
+
+  // 8. Sistema de autosave
+  if(typeof initAutosave === 'function') initAutosave();
+
+  // 9. Cotización del dólar
+  if(typeof startDolarAutoRefresh === 'function') startDolarAutoRefresh();
+});</code></pre>
+
+<h3>Funciones clave y sus propósitos</h3>
+<table>
+  <tr><th>Función</th><th>Módulo</th><th>Propósito</th></tr>
+  <tr><td>saveAll()</td><td>Principal</td><td>Persiste V,P,E,S,H,nid + llama onAfterSave</td></tr>
+  <tr><td>saveMkt()</td><td>Marketing</td><td>Persiste eventos, kanban, media, tareas, usuarios</td></tr>
+  <tr><td>onAfterSave()</td><td>Autosave</td><td>Debounce 600ms + indicador visual + checkAutoBackup</td></tr>
+  <tr><td>doLogin()</td><td>Marketing*</td><td>Multi-rol: admin → panel admin, marketing → panel mkt</td></tr>
+  <tr><td>renderDash()</td><td>Principal</td><td>KPIs + Chart.js + alertas + cotización dólar</td></tr>
+  <tr><td>renderGanancias()</td><td>Principal</td><td>Desglose financiero con fórmula definitiva</td></tr>
+  <tr><td>calcNeto(sv)</td><td>Principal</td><td>sv.valor - sv.comision (SIN permuta)</td></tr>
+  <tr><td>getEntrega(v)</td><td>Principal</td><td>v.valorVenta - P[v.id].info * 0.6</td></tr>
+  <tr><td>getDiasStock(v)</td><td>Principal</td><td>Días entre compra y venta/hoy</td></tr>
+  <tr><td>renderPublic()</td><td>Principal</td><td>Actualiza catálogo público y filtros de marca</td></tr>
+  <tr><td>genTexts()</td><td>Principal</td><td>Genera FB Marketplace + Messenger, guarda en veh.fbText</td></tr>
+  <tr><td>fetchDolar()</td><td>Dólar</td><td>async, Promise.all, actualiza globals + cache</td></tr>
+  <tr><td>createBackupNow(silent)</td><td>Autosave</td><td>Snapshot completo en localStorage</td></tr>
+  <tr><td>applyBackupData(data)</td><td>Autosave</td><td>Restaura estado desde objeto de backup</td></tr>
+  <tr><td>validate(fields)</td><td>Principal</td><td>Valida campos requeridos, muestra errores visuales</td></tr>
+  <tr><td>confirm_(title,msg,cb,icon)</td><td>Principal</td><td>Modal de confirmación antes de eliminar</td></tr>
+  <tr><td>toast(msg, type)</td><td>Principal</td><td>Notificación temporal ok/err/info/warn</td></tr>
+  <tr><td>addHist(action,veh,detail)</td><td>Principal</td><td>Registra en H[] + saveAll()</td></tr>
+</table>
+<p style="font-size:0.8rem;color:var(--tx3);">* función con override en módulo posterior</p>
+
+<h3>Alertas de stock (Dashboard)</h3>
+<table>
+  <tr><th>Alerta</th><th>Condición</th><th>Color</th></tr>
+  <tr><td>Más de 60 días en stock</td><td>(hoy - fechaIngreso) > 60 días, estado ≠ Vendido</td><td>Dorado</td></tr>
+  <tr><td>En reparación</td><td>estado === 'Reparación'</td><td>Rojo</td></tr>
+  <tr><td>Señados</td><td>estado === 'Señado'</td><td>Azul</td></tr>
+  <tr><td>Stock alto</td><td>V.length > 15</td><td>Dorado</td></tr>
+</table>
+
+<div class="callout callout-ok">
+  <p><strong>✅ Validaciones implementadas:</strong> Marca+Modelo+ValorVenta requeridos en vehículo. Concepto+Monto requeridos en gastos. Valor requerido en ventas. Montos no negativos. Usuario único en gestión de usuarios. Confirmación modal antes de CUALQUIER eliminación.</p>
+</div>
+
+<div class="footer">
+  <p><strong>Selecto Automotores</strong> · Documentación técnica completa del sistema v2026.06</p>
+  <p style="margin-top:6px">Julio A. Roca 2026 y Gobernador Alfredo Asmar · Neuquén Capital · @selectoautos</p>
+</div>
+
+</div>
+</body>
+</html>
